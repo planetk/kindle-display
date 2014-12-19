@@ -3,6 +3,8 @@ extends layout
 block content
   - weather = weather_underground
 
+  // pre= JSON.stringify(traffic, "", " ")
+
   #canvas
     #status
       if new Date().getHours() < 12 && awigo[weather.forecast[0].date]
@@ -12,7 +14,7 @@ block content
 
     #current
       img(src="/images/weather/#{weather.today.icon}.svg")
-      p.temp #{formatTemp(uvr.aussen)}
+      p.temp #{netatmo.aussen[0].value[0][0]}°
 
     #special
       if special_day
@@ -59,18 +61,18 @@ block content
             Chartist.Line('.ct-chart', data, options);
 
       img#house(src="/images/house.svg")
-      p.temp #{formatTemp(pluggit.innen)}
-      p.speed #{pluggit.speed}
-      img#bypass(src="/images/bypass_#{pluggit.bypass=='open' ? 'open' : 'closed'}.svg")
+      p.temp-in #{netatmo.innen[0].value[0][0]}°
+      p.temp-out #{netatmo.aussen[0].value[0][0]}
+      // img#bypass(src="/images/bypass_#{pluggit.bypass=='open' ? 'open' : 'closed'}.svg")
 
     #forecast
       for entry in weather.forecast
         section
           h2
             =entry.day
-            if awigo[entry.date]
-              for item in awigo[entry.date]
-                strong= item.letter
+            // if awigo[entry.date]
+            //   for item in awigo[entry.date]
+            //     strong= item.letter
             if moon[entry.date]
               img.moon(src="/images/moon/#{moon[entry.date]}.svg")
           img(src="/images/weather/#{entry.icon}.svg")

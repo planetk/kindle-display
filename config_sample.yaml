@@ -13,3 +13,32 @@ weather_underground:
   location: "Germany/Bersenbruck"
   apiKey: "__"
   cacheMin: 10
+netatmo:
+ auth:
+   client_id: "__netatmo_client_id__"
+   client_secret: "__netatmo_secret__"
+   username: "__netatmo_username__"
+   password: "__netatmo_password__"
+ devices: 
+   innen:
+     device_id: "aa:bb:cc:dd:ee:ff"
+     scale: "max"
+     date_end: "last"
+     type: 
+       - Temperature
+       - CO2
+       - Humidity
+       - Pressure
+   aussen:
+     device_id: "aa:bb:cc:dd:ee:ff"
+     module_id: "00:11:22:aa:aa:aa"
+     scale: "max"
+     date_end: last
+     type: 
+       - Temperature
+       - Humidity
+traffic:
+  bing_key: AaaaaaaaaaaaaaaaaaaaaaaA-BbbbbbbbbbbbbbbbbbbbbbbbbbbbB
+  waypoints:
+    - Bremen, Am Brill
+    - Bremerhaven

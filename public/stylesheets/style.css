@@ -17,6 +17,7 @@ a {
   background-color: #fff;
 }
 #status {
+  background-color: #008000;
   position: absolute;
   left: 5%;
   right: 5%;
@@ -141,7 +142,23 @@ a {
   left: 11%;
   position: absolute;
   width: 75%;
-  bottom: 30%;
+  bottom: 20%;
+}
+#today .temp-in {
+  left: 24%;
+  position: absolute;
+  width: 50%;
+  bottom: 25%;
+  font-size: 1.02em;
+  text-align: center;
+}
+#today .temp-out {
+  right: 0%;
+  position: absolute;
+  width: 50%;
+  bottom: 52%;
+  font-size: 0.9em;
+  text-align: center;
 }
 #today #bypass {
   right: 19%;
@@ -151,14 +168,6 @@ a {
   background-color: #fff;
   border-bottom: 3px solid #fff;
   border-top: 3px solid #fff;
-}
-#today .temp {
-  left: 27%;
-  position: absolute;
-  width: 50%;
-  bottom: 35%;
-  font-size: 1.3em;
-  text-align: center;
 }
 #today .speed {
   right: 16%;
