@@ -1,5 +1,8 @@
 request = require "superagent"
 
+icons = 
+  "None": "road39"
+  "Mild": "clock117"
 
 class Traffic
   constructor: (conf) ->
@@ -8,9 +11,12 @@ class Traffic
   data: (cb) ->
     request.get @bingApiURL, (res) =>
       data = res.body
+      traffic = {}
       trafficResource = data.resourceSets[0].resources[0]
-      traffic.congestion = trafficResource.trafficCongestion
+      traffic.congestion = trafficResource.trafficCongestion  # None, Mild, ...
       traffic.duration = trafficResource.travelDurationTraffic
+      if icons[traffic.congestion]?
+        traffic.icon = "/images/traffic/#{icons[traffic.congestion]}.svg"
       traffic.extratime = trafficResource.travelDurationTraffic - trafficResource.travelDuration
 
       cb null, traffic

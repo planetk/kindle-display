@@ -3,26 +3,35 @@ extends layout
 block content
   - weather = weather_underground
 
-  // pre= JSON.stringify(traffic, "", " ")
 
   #canvas
     #status
-      if new Date().getHours() < 12 && awigo[weather.forecast[0].date]
-        #awigo
-          for item in awigo[weather.forecast[0].date]
-            strong= item.name
+      // pre= JSON.stringify(traffic, "", " ")
+      // pre= JSON.stringify(directions, "", " ")
 
     #current
       img(src="/images/weather/#{weather.today.icon}.svg")
       p.temp #{netatmo.aussen[0].value[0][0]}°
 
     #special
-      if special_day
-        p(data-type=special_day[0].type)
-          if special_day[0].type == "namenstag"
-            small Namenstag
-          a(href=special_day[0].url, target="_blank")= special_day[0].name
-      img(src=today_icon)
+      if traffic
+        p HB - HBV
+        if traffic.icon
+          img(src=traffic.icon)
+        else
+          p= traffic.congestion
+        if directions
+          p #{Math.round(Math.min(traffic.extratime,directions.extratime)/60)} - #{Math.round(Math.max(traffic.extratime,directions.extratime)/60)} Min
+        else
+          p + #{Math.round(traffic.extratime/60)} Min
+        
+
+      //if special_day
+      //  p(data-type=special_day[0].type)
+      //    if special_day[0].type == "namenstag"
+      //      small Namenstag
+      //    a(href=special_day[0].url, target="_blank")= special_day[0].name
+      //img(src=today_icon)
 
     #today
       if weather.probabilityMax >= 20
