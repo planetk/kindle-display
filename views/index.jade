@@ -10,8 +10,9 @@ block content
       // pre= JSON.stringify(directions, "", " ")
 
     #current
-      img(src="/images/weather/#{weather.today.icon}.svg")
-      p.temp #{netatmo.aussen[0].value[0][0]}°
+      // img(src="/images/weather/#{weather.today.icon}.svg")
+      // if netatmo
+      //   p.temp #{netatmo.aussen[0].value[0][0]}°
 
     #special
       if traffic
@@ -20,10 +21,10 @@ block content
           img(src=traffic.icon)
         else
           p= traffic.congestion
-        if directions
-          p #{Math.round(Math.min(traffic.extratime,directions.extratime)/60)} - #{Math.round(Math.max(traffic.extratime,directions.extratime)/60)} Min
-        else
-          p + #{Math.round(traffic.extratime/60)} Min
+          // if directions
+          //   p #{Math.round(Math.min(traffic.extratime,directions.extratime)/60)} - #{Math.round(Math.max(traffic.extratime,directions.extratime)/60)} Min
+          // else
+        p #{Math.round(traffic.duration/60)} (+ #{Math.round(traffic.extratime/60)}) Min
         
 
       //if special_day
@@ -34,7 +35,7 @@ block content
       //img(src=today_icon)
 
     #today
-      if weather.probabilityMax >= 20
+      if weather.probabilityMax < 20
         #rain
           .rain-label
             p #{weather.probabilityMax}<small>%</small>
@@ -70,9 +71,53 @@ block content
             Chartist.Line('.ct-chart', data, options);
 
       img#house(src="/images/house.svg")
-      p.temp-in #{netatmo.innen[0].value[0][0]}°
-      p.temp-out #{netatmo.aussen[0].value[0][0]}
+      if netatmo
+        p.temp-in #{netatmo.innen[0].value[0][0]}°
+        p.temp-out #{netatmo.aussen[0].value[0][0]}
       // img#bypass(src="/images/bypass_#{pluggit.bypass=='open' ? 'open' : 'closed'}.svg")
+
+    #now
+      img(src="/images/weather/#{weather.today.icon}.svg")
+      if netatmo
+        p.temp #{netatmo.aussen[0].value[0][0]}°
+
+      if weather.probabilityMax >= 20
+        #rain
+          .rain-label
+            p
+              img(src="images/drop.svg")
+              =weather.probabilityMax
+              small %
+          .ct-chart
+          script.
+            var data = {
+              labels: [#{weather.rain.hour.join(',')}],
+              series: [
+                [#{weather.rain.probability.join(',')}]
+              ]
+            };
+
+            var options = {
+              width: 150,
+              height: 70,
+              lineSmooth: true,
+              low: 0,
+              high: #{weather.probabilityMax},
+              showPoint: false,
+              axisX: {
+                showGrid: false,
+                showLabel: true,
+                offset: 0
+              },
+              axisY: {
+                showGrid: true,
+                showLabel: false,
+                offset: 5
+              }
+            };
+
+            Chartist.Line('.ct-chart', data, options);
+
 
     #forecast
       for entry in weather.forecast

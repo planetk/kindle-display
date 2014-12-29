@@ -13,7 +13,8 @@ class NetatmoLib
      tasks[device] = (callback) =>
        @api.getMeasure @devices[device], callback
 
-   async.series tasks, cb 
+   async.series tasks, (err, result) ->
+     cb null, result 
 
 
 module.exports = NetatmoLib

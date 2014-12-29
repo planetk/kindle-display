@@ -11,13 +11,16 @@ class Traffic
   data: (cb) ->
     request.get @bingApiURL, (res) =>
       data = res.body
+      console.log data
       traffic = {}
-      trafficResource = data.resourceSets[0].resources[0]
-      traffic.congestion = trafficResource.trafficCongestion  # None, Mild, ...
-      traffic.duration = trafficResource.travelDurationTraffic
-      if icons[traffic.congestion]?
-        traffic.icon = "/images/traffic/#{icons[traffic.congestion]}.svg"
-      traffic.extratime = trafficResource.travelDurationTraffic - trafficResource.travelDuration
+      sets = data.resourceSets[0]
+      if sets? 
+        trafficResource = sets.resources[0]
+        traffic.congestion = trafficResource.trafficCongestion  # None, Mild, ...
+        traffic.duration = trafficResource.travelDurationTraffic
+        if icons[traffic.congestion]?
+          traffic.icon = "/images/traffic/#{icons[traffic.congestion]}.svg"
+        traffic.extratime = trafficResource.travelDurationTraffic - trafficResource.travelDuration
 
       cb null, traffic
 
